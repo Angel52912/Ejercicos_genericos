@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 3: Estacionamiento para Autos (Callejón / Cola)</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <header class="app-header">
+            <div class="header-badge">Estructura de Datos</div>
+            <h1>Estacionamiento en Callejón</h1>
+            <p>Simulación de Cola Circular / Dinámica para Control Vehicular</p>
+        </header>
+
+        <!-- Main Content Grid -->
+        <div class="main-grid">
+            <!-- Control Panel & Form -->
+            <section class="card control-section">
+                <h2>Control de Acceso</h2>
+                <form id="parkingForm" class="parking-form">
+                    <div class="input-group">
+                        <label for="placas">Placas del Auto</label>
+                        <input type="text" id="placas" placeholder="Ej. ABC-123-D" required autocomplete="off">
+                    </div>
+                    <div class="input-group">
+                        <label for="propietario">Nombre del Propietario</label>
+                        <input type="text" id="propietario" placeholder="Ej. Juan Pérez" required autocomplete="off">
+                    </div>
+                    <div class="button-group">
+                        <button type="submit" id="btnEntrada" class="btn btn-primary">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Registrar Entrada de Auto
+                        </button>
+                        <button type="button" id="btnSalida" class="btn btn-danger">
+                            <svg class="icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z"></path></svg>
+                            Procesar Salida de Auto
+                        </button>
+                    </div>
+                </form>
+
+                <!-- Statistics / Queue Info -->
+                <div class="stats-box">
+                    <div class="stat-item">
+                        <span class="stat-label">Autos en Callejón:</span>
+                        <span id="statCount" class="stat-value">0</span>
+                    </div>
+                    <div class="stat-item">
+                        <span class="stat-label">Tarifa por segundo:</span>
+                        <span class="stat-value price">$2.00 MXN</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Visual Alley / Queue Representation -->
+            <section class="card alley-section">
+                <div class="alley-header">
+                    <h2>Estado del Callejón (Cola)</h2>
+                    <span class="alley-direction">Entrada <span class="arrow">➔</span> Salida (FIFO)</span>
+                </div>
+                
+                <div id="alleyContainer" class="alley-container">
+                    <div class="empty-alley">
+                        <svg class="empty-icon" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"></path></svg>
+                        <p>El callejón está actualmente vacío.</p>
+                        <span>Los vehículos ingresados aparecerán aquí.</span>
+                    </div>
+                </div>
+            </section>
+        </div>
+
+        <!-- Alert & Notification Area -->
+        <section id="alertContainer" class="alert-container hidden">
+            <!-- Dynamic alerts / exit receipts will be injected here -->
+        </section>
+
+        <!-- Detailed Exit Receipt Modal / Card -->
+        <div id="receiptModal" class="modal hidden">
+            <div class="modal-content">
+                <div class="receipt-header">
+                    <div class="receipt-icon">🚗</div>
+                    <h3>Comprobante de Salida</h3>
+                    <button id="closeModal" class="close-btn">&times;</button>
+                </div>
+                <div id="receiptBody" class="receipt-body">
+                    <!-- Populated dynamically -->
+                </div>
+                <div class="receipt-footer">
+                    <button id="btnPrintReceipt" class="btn btn-secondary">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

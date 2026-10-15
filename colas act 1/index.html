@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ejercicio 1 - Ventanilla de un Banco (Gestión de Cola)</title>
+    <!-- Bootstrap 5 CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+    <!-- FontAwesome Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css">
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="style.css">
+</head>
+<body class="bg-light">
+
+    <!-- Navbar / Header -->
+    <nav class="navbar navbar-dark bg-primary shadow-sm mb-4">
+        <div class="container-fluid py-2">
+            <span class="navbar-brand mb-0 h1 fs-4">
+                <i class="fa-solid fa-building-columns me-2"></i>Banco Central - Sistema de Turnos y Ventanilla
+            </span>
+            <span class="text-white small d-none d-md-inline">
+                <i class="fa-regular fa-clock me-1"></i><span id="current-time">--:--:--</span>
+            </span>
+        </div>
+    </nav>
+
+    <div class="container pb-5">
+        
+        <!-- Alertas dinámicas -->
+        <div id="alert-container"></div>
+
+        <div class="row g-4">
+            <!-- Panel de Control y Registro (Izquierda) -->
+            <div class="col-lg-4">
+                <div class="card shadow-sm border-0 mb-4">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="card-title mb-0 text-primary fw-bold">
+                            <i class="fa-solid fa-user-plus me-2"></i>Nuevo Turno
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <form id="ticket-form" novalidate>
+                            <div class="mb-3">
+                                <label for="client-name" class="form-label fw-semibold">Nombre del Cliente</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-user"></i></span>
+                                    <input type="text" class="form-control" id="client-name" placeholder="Ej. María Pérez" required>
+                                </div>
+                                <div class="invalid-feedback">Por favor ingrese el nombre del cliente.</div>
+                            </div>
+
+                            <div class="mb-3">
+                                <label for="movement-type" class="form-label fw-semibold">Tipo de Movimiento</label>
+                                <div class="input-group">
+                                    <span class="input-group-text bg-light"><i class="fa-solid fa-list-check"></i></span>
+                                    <select class="form-select" id="movement-type" required>
+                                        <option value="" selected disabled>Seleccione movimiento...</option>
+                                        <option value="Pago de servicio">Pago de servicio</option>
+                                        <option value="Depósito">Depósito</option>
+                                        <option value="Retiro">Retiro</option>
+                                        <option value="Compra de tiempo-aire">Compra de tiempo-aire</option>
+                                        <option value="Consulta de saldo">Consulta de saldo</option>
+                                    </select>
+                                </div>
+                                <div class="invalid-feedback">Seleccione un tipo de movimiento.</div>
+                            </div>
+
+                            <div class="d-grid gap-2">
+                                <button type="submit" id="btn-add" class="btn btn-primary py-2 fw-semibold">
+                                    <i class="fa-solid fa-ticket me-2"></i>Agregar a la Cola
+                                </button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+
+                <!-- Estado de la Cola y Punteros -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3">
+                        <h5 class="card-title mb-0 text-secondary fw-bold">
+                            <i class="fa-solid fa-info-circle me-2"></i>Estado de la Estructura (Cola)
+                        </h5>
+                    </div>
+                    <div class="card-body">
+                        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                            <span class="text-muted"><i class="fa-solid fa-arrow-right-to-bracket me-2 text-success"></i>Frente (Front):</span>
+                            <span id="badge-front" class="badge bg-secondary fs-6">Ninguno</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                            <span class="text-muted"><i class="fa-solid fa-arrow-right-from-bracket me-2 text-danger"></i>Final (Rear):</span>
+                            <span id="badge-rear" class="badge bg-secondary fs-6">Ninguno</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center mb-3 pb-2 border-bottom">
+                            <span class="text-muted"><i class="fa-solid fa-users me-2 text-primary"></i>Clientes en espera:</span>
+                            <span id="badge-count" class="badge bg-primary fs-6">0 / 10</span>
+                        </div>
+                        <div class="d-flex justify-content-between align-items-center">
+                            <span class="text-muted"><i class="fa-solid fa-gauge me-2 text-warning"></i>Estado Cola:</span>
+                            <span id="badge-status" class="badge bg-success fs-6">Disponible</span>
+                        </div>
+
+                        <div class="mt-4 pt-2">
+                            <button id="btn-serve" class="btn btn-success w-100 py-2 fw-semibold mb-2">
+                                <i class="fa-solid fa-headset me-2"></i>Atender en Ventanilla
+                            </button>
+                            <button id="btn-reset" class="btn btn-outline-danger w-100 py-2 btn-sm">
+                                <i class="fa-solid fa-rotate-right me-1"></i>Reiniciar Cola
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Visualización de la Cola y Ventanilla (Derecha) -->
+            <div class="col-lg-8">
+                <!-- Ventanilla Activa / Último Atendido -->
+                <div class="card shadow-sm border-0 mb-4 bg-white">
+                    <div class="card-body p-4">
+                        <div class="row align-items-center">
+                            <div class="col-md-3 text-center mb-3 mb-md-0">
+                                <div class="teller-icon-box mx-auto bg-success bg-opacity-10 text-success rounded-circle d-flex align-items-center justify-content-center" style="width: 70px; height: 70px;">
+                                    <i class="fa-solid fa-user-tie fa-2x"></i>
+                                </div>
+                                <span class="badge bg-success mt-2">Ventanilla 1</span>
+                            </div>
+                            <div class="col-md-9 border-start-md">
+                                <h6 class="text-muted text-uppercase small fw-bold mb-1">Último Cliente Atendido</h6>
+                                <div id="served-client-info" class="text-secondary fst-italic">
+                                    Ningún cliente ha sido atendido en esta sesión.
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Tabla de la Cola -->
+                <div class="card shadow-sm border-0">
+                    <div class="card-header bg-white py-3 d-flex justify-content-between align-items-center">
+                        <h5 class="card-title mb-0 text-primary fw-bold">
+                            <i class="fa-solid fa-list-ol me-2"></i>Cola de Espera Actual (FIFO)
+                        </h5>
+                        <span class="badge bg-light text-dark border">Límite: 10 turnos</span>
+                    </div>
+                    <div class="card-body p-0">
+                        <div class="table-responsive">
+                            <table class="table table-hover align-middle mb-0" id="queue-table">
+                                <thead class="table-light text-uppercase fs-7">
+                                    <tr>
+                                        <th class="py-3 ps-3">Turno</th>
+                                        <th class="py-3">Cliente</th>
+                                        <th class="py-3">Movimiento</th>
+                                        <th class="py-3">Hora de Llegada</th>
+                                        <th class="py-3 text-center">Posición</th>
+                                    </tr>
+                                </thead>
+                                <tbody id="queue-tbody">
+                                    <!-- Las filas se insertarán dinámicamente -->
+                                    <tr id="empty-row">
+                                        <td colspan="5" class="text-center py-5 text-muted">
+                                            <i class="fa-solid fa-clipboard-list fa-3x mb-3 text-black-50"></i>
+                                            <p class="mb-0">La cola de espera está vacía actualmente.</p>
+                                        </td>
+                                    </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <!-- Modal de Detalles de Atención -->
+    <div class="modal fade" id="attentionModal" tabindex="-1" aria-labelledby="attentionModalLabel" aria-hidden="true">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content border-0 shadow">
+                <div class="modal-header bg-success text-white">
+                    <h5 class="modal-title fw-bold" id="attentionModalLabel">
+                        <i class="fa-solid fa-circle-check me-2"></i>Cliente Atendido en Ventanilla
+                    </h5>
+                    <button type="button" class="btn-close btn-close-white" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body p-4" id="attention-modal-body">
+                    <!-- Contenido dinámico -->
+                </div>
+                <div class="modal-footer bg-light">
+                    <button type="button" class="btn btn-success px-4" data-bs-dismiss="modal">Aceptar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap 5 JS Bundle -->
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+    <!-- Custom JS -->
+    <script src="app.js"></script>
+</body>
+</html>
