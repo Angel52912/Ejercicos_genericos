@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicio 1 · Productos disponibles y retirados</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="barra">
+      <div>
+        <h1>Ejercicio 1. Productos disponibles y retirados</h1>
+        <p>Práctica Unidad II · Listas</p>
+      </div>
+      <a class="volver" href="../index.html">&#8592; Inicio</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="tarjeta">
+      <div class="encabezado">
+        <img src="img/productos.svg" alt="">
+        <div>
+          <h2>Almacén del supermercado</h2>
+          <p>Cada producto se crea con una cantidad y un precio aleatorios. Puedes retirarlos y ver cuántos hay disponibles y retirados.</p>
+        </div>
+      </div>
+
+      <div class="bloque">
+        <h3>Escanear producto</h3>
+        <button type="button" id="btnEscanear" class="btn">Escanear producto</button>
+      </div>
+
+      <form id="frmRetirar">
+        <h3>Retirar producto</h3>
+        <div class="campos">
+          <label>Producto
+            <select id="cboRetirar"></select>
+          </label>
+          <button type="submit" id="btnRetirar" class="btn sec">Retirar</button>
+        </div>
+      </form>
+
+      <p id="lblMensaje" class="mensaje" role="status"></p>
+      <p>Disponibles: <span id="lblDisponibles" class="contador">0</span> · Retirados: <span id="lblRetirados" class="contador">0</span></p>
+
+      <div class="tablas">
+        <div class="scroll">
+          <table>
+            <caption>Disponibles</caption>
+            <thead><tr><th>Producto</th><th>Cantidad</th><th>Precio</th></tr></thead>
+            <tbody id="tblDisponibles"></tbody>
+          </table>
+        </div>
+        <div class="scroll">
+          <table>
+            <caption>Retirados</caption>
+            <thead><tr><th>Producto</th><th>Cantidad</th><th>Precio</th></tr></thead>
+            <tbody id="tblRetirados"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="paginacion">
+        <span></span>
+        <a href="../ejercicio2/index.html">Siguiente: Ejercicio 2. Pares e impares &#8594;</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/utilidades.js"></script>
+  <script src="js/modelos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

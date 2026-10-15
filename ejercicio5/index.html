@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicio 5 · Listar palabras por letra</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="barra">
+      <div>
+        <h1>Ejercicio 5. Listar palabras por letra</h1>
+        <p>Práctica Unidad II · Listas</p>
+      </div>
+      <a class="volver" href="../index.html">&#8592; Inicio</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="tarjeta">
+      <div class="encabezado">
+        <img src="img/palabras.svg" alt="">
+        <div>
+          <h2>Clasificación de palabras</h2>
+          <p>Cada palabra se guarda en la lista de su primera letra; si la letra es nueva, la aplicación crea una lista nueva.</p>
+        </div>
+      </div>
+
+      <form id="frmPalabra">
+        <div class="campos">
+          <label>Palabra
+            <input type="text" id="txtPalabra" autocomplete="off">
+          </label>
+          <button type="submit" id="btnAgregarPalabra" class="btn">Agregar</button>
+          <button type="button" id="btnMostrar" class="btn sec">Mostrar listas</button>
+        </div>
+      </form>
+
+      <p id="lblMensaje" class="mensaje" role="status"></p>
+      <div id="pnlListas" class="bloque"></div>
+
+      <div class="paginacion">
+        <a href="../ejercicio4/index.html">&#8592; Ejercicio 4. Eliminar y ordenar productos</a>
+        <a href="../index.html">Volver al inicio &#8594;</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/utilidades.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

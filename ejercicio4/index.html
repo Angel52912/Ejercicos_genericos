@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicio 4 · Eliminar y ordenar productos</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="barra">
+      <div>
+        <h1>Ejercicio 4. Eliminar y ordenar productos</h1>
+        <p>Práctica Unidad II · Listas</p>
+      </div>
+      <a class="volver" href="../index.html">&#8592; Inicio</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="tarjeta">
+      <div class="encabezado">
+        <img src="img/ordenar.svg" alt="">
+        <div>
+          <h2>Lista de compras</h2>
+          <p>Agrega productos con clave y precio, elimínalos por clave y consulta la lista ordenada por nombre con el costo total.</p>
+        </div>
+      </div>
+
+      <form id="frmProducto">
+        <h3>Agregar producto</h3>
+        <div class="campos">
+          <label>Clave
+            <input type="text" id="txtClave" autocomplete="off">
+          </label>
+          <label>Nombre
+            <input type="text" id="txtNombre" autocomplete="off">
+          </label>
+          <label>Precio
+            <input type="text" id="txtPrecio" inputmode="decimal" autocomplete="off">
+          </label>
+          <button type="submit" id="btnAgregar" class="btn">Agregar</button>
+        </div>
+      </form>
+
+      <form id="frmEliminar">
+        <h3>Eliminar producto</h3>
+        <div class="campos">
+          <label>Clave del producto
+            <input type="text" id="txtClaveEliminar" autocomplete="off">
+          </label>
+          <button type="submit" id="btnEliminar" class="btn sec">Eliminar</button>
+        </div>
+      </form>
+
+      <button type="button" id="btnMostrar" class="btn">Mostrar ordenados</button>
+      <p id="lblMensaje" class="mensaje" role="status"></p>
+
+      <div class="scroll">
+        <table>
+          <caption>Productos ordenados por nombre</caption>
+          <thead><tr><th>Clave</th><th>Nombre</th><th>Precio</th></tr></thead>
+          <tbody id="tblProductos"></tbody>
+        </table>
+      </div>
+      <p>Costo total de compra: <span id="lblTotal" class="contador">$0.00</span></p>
+
+      <div class="paginacion">
+        <a href="../ejercicio3/index.html">&#8592; Ejercicio 3. Aprobados y reprobados</a>
+        <a href="../ejercicio5/index.html">Siguiente: Ejercicio 5. Listar palabras por letra &#8594;</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/utilidades.js"></script>
+  <script src="js/modelos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

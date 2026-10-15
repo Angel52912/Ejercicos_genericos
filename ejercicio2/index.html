@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicio 2 · Pares e impares</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="barra">
+      <div>
+        <h1>Ejercicio 2. Pares e impares</h1>
+        <p>Práctica Unidad II · Listas</p>
+      </div>
+      <a class="volver" href="../index.html">&#8592; Inicio</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="tarjeta">
+      <div class="encabezado">
+        <img src="img/numeros.svg" alt="">
+        <div>
+          <h2>Separación de números</h2>
+          <p>La aplicación genera una lista de números aleatorios y la separa en números pares e impares.</p>
+        </div>
+      </div>
+
+      <form id="frmPares">
+        <div class="campos">
+          <label>¿Cuántos números? (1 a 100)
+            <input type="text" id="txtCantidad" inputmode="decimal" autocomplete="off">
+          </label>
+          <button type="submit" id="btnGenerar" class="btn">Generar lista</button>
+        </div>
+      </form>
+
+      <p id="lblMensaje" class="mensaje" role="status"></p>
+
+      <div class="bloque"><h3>Lista generada</h3><div id="lblGenerados" class="chips"></div></div>
+      <div class="bloque"><h3>Lista de pares</h3><div id="lblPares" class="chips"></div></div>
+      <div class="bloque"><h3>Lista de impares</h3><div id="lblImpares" class="chips"></div></div>
+
+      <div class="paginacion">
+        <a href="../ejercicio1/index.html">&#8592; Ejercicio 1. Productos disponibles y retirados</a>
+        <a href="../ejercicio3/index.html">Siguiente: Ejercicio 3. Aprobados y reprobados &#8594;</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/utilidades.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>

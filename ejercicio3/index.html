@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Ejercicio 3 · Aprobados y reprobados</title>
+  <link rel="stylesheet" href="css/estilos.css">
+</head>
+<body>
+  <header>
+    <div class="barra">
+      <div>
+        <h1>Ejercicio 3. Aprobados y reprobados</h1>
+        <p>Práctica Unidad II · Listas</p>
+      </div>
+      <a class="volver" href="../index.html">&#8592; Inicio</a>
+    </div>
+  </header>
+
+  <main>
+    <div class="tarjeta">
+      <div class="encabezado">
+        <img src="img/alumnos.svg" alt="">
+        <div>
+          <h2>Registro de alumnos</h2>
+          <p>Los alumnos con calificación menor que 7 se sacan de la lista principal y se guardan en la lista de reprobados.</p>
+        </div>
+      </div>
+
+      <form id="frmAlumno">
+        <h3>Registrar alumno</h3>
+        <div class="campos">
+          <label>Alumno
+            <input type="text" id="txtAlumno" autocomplete="off">
+          </label>
+          <label>Calificación (0 a 10)
+            <input type="text" id="txtCalificacion" inputmode="decimal" autocomplete="off">
+          </label>
+          <button type="submit" id="btnRegistrar" class="btn">Registrar</button>
+          <button type="button" id="btnClasificar" class="btn sec">Clasificar</button>
+        </div>
+      </form>
+
+      <p id="lblMensaje" class="mensaje" role="status"></p>
+      <p>Alumnos en la lista principal: <span id="lblTotalAlumnos" class="contador">0</span></p>
+
+      <div class="tablas">
+        <div class="scroll">
+          <table>
+            <caption>Aprobados</caption>
+            <thead><tr><th>Alumno</th><th>Calificación</th></tr></thead>
+            <tbody id="tblAprobados"></tbody>
+          </table>
+        </div>
+        <div class="scroll">
+          <table>
+            <caption>Reprobados</caption>
+            <thead><tr><th>Alumno</th><th>Calificación</th></tr></thead>
+            <tbody id="tblReprobados"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <div class="paginacion">
+        <a href="../ejercicio2/index.html">&#8592; Ejercicio 2. Pares e impares</a>
+        <a href="../ejercicio4/index.html">Siguiente: Ejercicio 4. Eliminar y ordenar productos &#8594;</a>
+      </div>
+    </div>
+  </main>
+
+  <script src="js/utilidades.js"></script>
+  <script src="js/modelos.js"></script>
+  <script src="js/app.js"></script>
+</body>
+</html>
